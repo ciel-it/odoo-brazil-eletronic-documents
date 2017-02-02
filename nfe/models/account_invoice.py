@@ -108,6 +108,8 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_invoice_send_nfe(self):
 
+	self.nfe_export()
+
         for inv in self:
 
             event_obj = self.env['l10n_br_account.document_event']

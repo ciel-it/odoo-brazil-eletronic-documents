@@ -85,5 +85,11 @@ class ResPartner(models.Model):
                     'habilitado_sintegra': info['cSit'],
                     'inscr_est': info.get('IE', False) or ie,
                 }
+
+                # RAFAEL PETRELLA - 01/02/2017
+                # Ajuste para ceps que começam com 0
+		if len(result['zip']) == 7:
+                    result['zip'] = '0' + result['zip']
+
                 partner.write(result)
         return
