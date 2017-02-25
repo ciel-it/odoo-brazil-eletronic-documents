@@ -17,7 +17,7 @@
 							groups="base.group_user"/>
 					<button name="invoice_resend" states="sefaz_exception" string="Habilitar re-envio"
 							class="oe_highlight" groups="base.group_user"/>
-					<button name="button_cancel" string="Cancelar Fatura"							
+					<button name="button_cancel" string="Cancelar NF Sefaz"							
 							groups="base.group_user" attrs="{'invisible': ['|',
 										    ('state','not in',['draft','proforma2', 'sefaz_export', 'sefaz_exception', 'open']),
 											('fiscal_type', '==', 'service')]}"

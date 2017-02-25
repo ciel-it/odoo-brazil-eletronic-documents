@@ -128,6 +128,7 @@ class AccountInvoice(models.Model):
             protNFe["nfe_protocol_number"] = ''
             try:
                 nfe.append(nfe_obj.set_xml(arquivo))
+
                 for processo in send(inv.company_id, nfe):
                     vals = {
                         'type': str(processo.webservice),
