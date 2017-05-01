@@ -95,8 +95,8 @@ def send(company, nfe):
     p.danfe.logo = add_backgound_to_logo_image(company)
     p.danfe.leiaute_logo_vertical = company.nfe_logo_vertical
     p.danfe.nome_sistema = company.nfe_email or \
-        u"""Odoo/OpenERP - Sistema de Gestao Empresarial de Codigo Aberto
-        - 100%% WEB - www.openerpbrasil.org"""
+        u"""SIGAPME
+        - http://ciel-it.com"""
 
     return p.processar_notas(nfe)
 
@@ -144,6 +144,9 @@ def print_danfe(inv):
     elif inv.nfe_version == '3.10':
         from pysped.nfe.leiaute import ProcNFe_310
         procnfe = ProcNFe_310()
+    elif inv.nfe_version == 'CTe 3.00':
+        from pysped.nfe.leiaute import ProcCTe_300
+        procnfe = ProcCTe_300()
 
     file_xml = monta_caminho_nfe(inv.company_id, inv.nfe_access_key)
     if inv.state not in ('open', 'paid', 'sefaz_cancelled'):

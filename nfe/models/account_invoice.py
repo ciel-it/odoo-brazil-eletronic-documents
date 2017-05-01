@@ -69,7 +69,7 @@ class AccountInvoice(models.Model):
                 nfe_key = nfe['key'][3:]
                 if erro:
                     raise RedirectWarning(
-                        erro, _(u'Erro na validaço da NFe!'))
+                        erro, _(u'Erro na validaço da NFe/CTe!'))
 
                 inv.write({'nfe_access_key': nfe_key})
                 save_dir = os.path.join(

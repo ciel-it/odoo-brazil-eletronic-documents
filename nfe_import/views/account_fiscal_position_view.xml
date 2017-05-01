@@ -19,10 +19,10 @@
 				</notebook>
 				<xpath expr="//tree/field[@name='tax_src_id']" position="after">
 					<field name="type" invisible="1" />
-					<field name="cfop_src_id" domain="[('type', '=', 'input')]" attrs="{'invisible': [('type', '=', 'output')] }" />
+					<field name="cfop_src_id" />
 				</xpath>
 				<xpath expr="//tree/field[@name='tax_code_dest_id']" position="after">
-					<field name="cfop_dest_id" domain="[('type', '=', 'input')]" attrs="{'invisible': [('type', '=', 'output')] }" />
+					<field name="cfop_dest_id" />
 				</xpath>
 			</field>
 		</record>

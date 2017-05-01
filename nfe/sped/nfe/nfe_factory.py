@@ -33,7 +33,12 @@ class NfeFactory(object):
                 import NFe310
             nfe_obj = NFe310()
         else:
-            from openerp.addons.l10n_br_account_product.sped.nfe.document \
-                import NFe200
-            nfe_obj = NFe200()
+            if nfe_version == 'CTe 3.00':
+                from openerp.addons.l10n_br_account_product.sped.nfe.document \
+                    import CTe300
+                nfe_obj = CTe300()
+            else:
+                from openerp.addons.l10n_br_account_product.sped.nfe.document \
+                    import NFe200
+                nfe_obj = NFe200()
         return nfe_obj
