@@ -148,6 +148,9 @@ def print_danfe(inv):
         from pysped.nfe.leiaute import ProcCTe_300
         procnfe = ProcCTe_300()
 
+    if not inv.nfe_access_key and inv.state == 'sefaz_export':
+        inv.nfe_export()
+
     file_xml = monta_caminho_nfe(inv.company_id, inv.nfe_access_key)
     if inv.state not in ('open', 'paid', 'sefaz_cancelled'):
         file_xml = os.path.join(file_xml, 'tmp/')
