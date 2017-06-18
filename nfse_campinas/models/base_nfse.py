@@ -44,7 +44,7 @@ class BaseNfse(models.TransientModel):
     @api.multi
     def send_rps(self):
         self.ensure_one()
-        if self.city_code == '6291':  # Campinas
+        if self.city_code == '09502':  # Campinas IBGE CODE
 
             if self.invoice_id.status_send_nfse == 'nao_enviado':
                 nfse = self._get_nfse_object()
@@ -78,7 +78,7 @@ class BaseNfse(models.TransientModel):
                         response = client.service.testeEnviar(xml_signed)
                     else:
                         response = client.service.enviar(xml_signed)
-                except Exception as e:
+                except:
                     _logger.warning('Erro ao enviar lote', exc_info=True)
                     status[
                         'message'] = 'Falha de conexão - Verifique a internet'
@@ -102,8 +102,8 @@ class BaseNfse(models.TransientModel):
                         if self.invoice_id.company_id.nfse_environment == '2':
                             status['status'] = '100'
                             status['success'] = True
-                            status[
-                                'message'] = 'NFSe emitida em homologação com sucesso!'
+                            status['message'] = \
+                                'NFSe emitida em homologação com sucesso!'
                             return status
 
                         self.invoice_id.status_send_nfse = 'enviado'
@@ -164,7 +164,7 @@ class BaseNfse(models.TransientModel):
 
     @api.multi
     def cancel_nfse(self):
-        if self.city_code == '6291':  # Campinas
+        if self.city_code == '09502':  # Campinas IBGE Code
             url = self._url_envio_nfse()
             client = self._get_client(url)
 
@@ -237,7 +237,7 @@ class BaseNfse(models.TransientModel):
 
     @api.multi
     def check_nfse_by_lote(self):
-        if self.city_code == '6291':  # Campinas
+        if self.city_code == '09502':  # Campinas IBGE Code
             url = self._url_envio_nfse()
             client = self._get_client(url)
 
@@ -257,7 +257,7 @@ class BaseNfse(models.TransientModel):
                       ]}
             try:
                 response = client.service.consultarLote(xml_send)
-            except Exception as e:
+            except:
                 _logger.warning('Erro ao consultar lote', exc_info=True)
                 status['message'] = 'Falha de conexão - Verifique a internet'
                 return status
@@ -296,8 +296,8 @@ class BaseNfse(models.TransientModel):
                         status['success'] = False
                 except:
                     status['status'] = '-100'
-                    status[
-                        'message'] = 'Erro ao tentar carregar a resposta da prefeitura'
+                    status['message'] = \
+                        'Erro ao tentar carregar a resposta da prefeitura'
                     status['success'] = False
             else:
                 status['status'] = '-1'
@@ -382,26 +382,26 @@ class BaseNfse(models.TransientModel):
 
     @api.multi
     def print_pdf(self, invoice):
-        if self.city_code == '6291':  # Campinas
+        if self.city_code == '09502':  # Campinas IBGE Code
             return self.env['report'].get_action(
                 invoice, 'nfse_campinas.danfse_report')
 
     def _url_envio_nfse(self):
-        if self.city_code == '6291':  # Campinas
+        if self.city_code == '09502':  # Campinas IBGE Code
             return 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '5403':  # Uberlandia
+        elif self.city_code == '70206':  # Uberlandia
             return 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '0427':  # Belem-PA
+        elif self.city_code == '01402':  # Belem-PA
             return 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '9051':  # Campo Grande
+        elif self.city_code == '02704':  # Campo Grande
             return 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '5869':  # Nova Iguaçu
+        elif self.city_code == '03500':  # Nova Iguaçu
             return 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '1219':  # Teresina
+        elif self.city_code == '11001':  # Teresina
             return 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '0921':  # São Luis
+        elif self.city_code == '11300':  # São Luis - MA
             return 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl'
-        elif self.city_code == '7145':  # Sorocaba
+        elif self.city_code == '52205':  # Sorocaba
             return 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl'
 
     def _get_nfse_object(self):
@@ -478,13 +478,12 @@ class BaseNfse(models.TransientModel):
                 inv.date_in_out,
                 tools.DEFAULT_SERVER_DATETIME_FORMAT)
             data_envio = data_envio.strftime('%Y%m%d')
-
             assinatura = '%011dNF   %012d%s%s %s%s%015d%015d%010d%014d' % \
                 (int(prestador['inscricao_municipal']),
                  int(inv.number),
                  data_envio, inv.taxation, 'N', 'N' if tipo_recolhimento == 'A' else 'S',
-                 valor_servico * 100,
-                 valor_deducao * 100,
+                 round(valor_servico * 100),
+                 round(valor_deducao * 100),
                  int(codigo_atividade),
                  int(tomador['cpf_cnpj']))
 
