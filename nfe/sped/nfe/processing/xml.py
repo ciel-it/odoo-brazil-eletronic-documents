@@ -144,6 +144,9 @@ def print_danfe(inv):
     elif inv.nfe_version == '3.10':
         from pysped.nfe.leiaute import ProcNFe_310
         procnfe = ProcNFe_310()
+    elif inv.nfe_version == '4.00':
+        from pysped.nfe.leiaute import ProcNFe_400
+        procnfe = ProcNFe_400()
     elif inv.nfe_version == 'CTe 3.00':
         from pysped.nfe.leiaute import ProcCTe_300
         procnfe = ProcCTe_300()
