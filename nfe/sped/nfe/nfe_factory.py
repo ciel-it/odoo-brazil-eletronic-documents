@@ -28,17 +28,22 @@ class NfeFactory(object):
         :param company: objeto res.company
         :return: Objeto Nfe
         """
-        if nfe_version == '3.10':
+        if nfe_version == '4.00':
             from openerp.addons.l10n_br_account_product.sped.nfe.document \
-                import NFe310
-            nfe_obj = NFe310()
+                import NFe400
+            nfe_obj = NFe400()
         else:
-            if nfe_version == 'CTe 3.00':
+            if nfe_version == '3.10':
                 from openerp.addons.l10n_br_account_product.sped.nfe.document \
-                    import CTe300
-                nfe_obj = CTe300()
+                    import NFe310
+                nfe_obj = NFe310()
             else:
-                from openerp.addons.l10n_br_account_product.sped.nfe.document \
-                    import NFe200
-                nfe_obj = NFe200()
+                if nfe_version == 'CTe 3.00':
+                    from openerp.addons.l10n_br_account_product.sped.nfe.document \
+                        import CTe300
+                    nfe_obj = CTe300()
+                else:
+                    from openerp.addons.l10n_br_account_product.sped.nfe.document \
+                        import NFe200
+                    nfe_obj = NFe200()
         return nfe_obj
